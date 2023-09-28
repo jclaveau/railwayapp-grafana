@@ -12,10 +12,41 @@ services:
       - GF_DEFAULT_INSTANCE_NAME=my-instance
       - GF_SECURITY_ADMIN_USER=owner
       - GF_LOG_MODE=console
+
+      # TODO is there some builtin env vars for those entries?
+      - ADMIN_EMAIL=aaa@bbb.com
+      # Grafana configuration DB
+      - DB_TYPE=postgres
+      - DB_HOST=xxxx
+      - DB_PORT=5432
+      - DB_DATABASE=grafana_config
+      - DB_USER=grafana
+      - DB_PASSWORD=xxxxx
+      - DB_SSL_MODE=disable
+      # Grafana
+      - COOKIE_SECURE=false # true if https
+      - ALLOW_EMBEDDING=true # allow iframes
+      - STRICT_TRANSPORT_SECURITY=true # HSTS tells browsers that the site should only be accessed using HTTPS
+      - ALLOW_SIGN_UP=false
+      - VERIFY_EMAIL=false
+      - EXPERIMENTAL_FEATURE_ADMIN_PAGE=true
+      - PLUGIN_ADMIN_ENABLED=true # nice for dev mode
+      # Postgres Datasource
+      - PG_DATASOURCE_NAME="My App DB"
+      - PG_DATASOURCE_HOST="xxx"
+      - PG_DATASOURCE_PORT="5432"
+      - PG_DATASOURCE_GRAFANA_USER="grafana"
+      - PG_DATASOURCE_GRAFANA_PASSWORD="xxxx"
+      - PG_DATASOURCE_DATABASE="railway"
+      - PG_DATASOURCE_SSL_MODE="disable"
+      - PG_DATASOURCE_VERSION="1000"
+
     ports:
       - 3000:3000
     volumes:
       - ./data/grafana:/var/lib/grafana
+      - ./config/grafana.ini:/etc/grafana/grafana.ini
+      - ./config/datasource.yml:/etc/grafana/provisioning/datasources/datasource.yml
     networks:
       - regenfass
 
