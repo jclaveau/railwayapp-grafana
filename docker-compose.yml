@@ -8,38 +8,55 @@ services:
     container_name: grafana-development
     restart: unless-stopped
     environment:
-      - TZ=Europe/Amsterdam
-      - GF_DEFAULT_INSTANCE_NAME=my-instance
-      - GF_SECURITY_ADMIN_USER=owner
+      - GF_DEFAULT_INSTANCE_NAME=xxxxx
+      - GF_APP_MODE=development
+      - GF_SERVER_ROOT_URL=http://localhost:3000/
+
+      # SECURTITY
+      - GF_SECURITY_COOKIE_SECURE=false # true if https
+      - GF_SECURITY_ADMIN_USER=xxxxx
+      - GF_SECURITY_ADMIN_PASSWORD=xxxx
+      - GF_SECURITY_ADMIN_EMAIL=xxx@xxxx.com
+      - GF_SECURITY_STRICT_TRANSPORT_SECURITY=true # HSTS tells browsers that the site should only be accessed using HTTPS
+      - GF_SECURITY_ALLOW_EMBEDDING=true # allow iframes
+
+      # AUTH
+      - GF_AUTH_ANONYMOUS_ENABLED=true
+      - GF_AUTH_ANONYMOUS_ORG_NAME=Public
+      - GF_AUTH_ANONYMOUS_ORG_ROLE=Viewer
+      - GF_AUTH_ANONYMOUS_HIDE_VERSION=true
+
+      # USERS
+      - GF_USERS_ALLOW_SIGN_UP=false
+      - GF_USERS_VERIFY_EMAIL_ENABLED=false
+      - GF_USERS_ALLOW_ORG_CREATE=false
+      - GF_USERS_AUTO_ASSIGN_ORG_ID=1
+
+      # LOG
       - GF_LOG_MODE=console
 
-      # TODO is there some builtin env vars for those entries?
-      - ADMIN_EMAIL=aaa@bbb.com
-      # Grafana configuration DB
-      - DB_TYPE=postgres
-      - DB_HOST=xxxx
-      - DB_PORT=5432
-      - DB_DATABASE=grafana_config
-      - DB_USER=grafana
-      - DB_PASSWORD=xxxxx
-      - DB_SSL_MODE=disable
-      # Grafana
-      - COOKIE_SECURE=false # true if https
-      - ALLOW_EMBEDDING=true # allow iframes
-      - STRICT_TRANSPORT_SECURITY=true # HSTS tells browsers that the site should only be accessed using HTTPS
-      - ALLOW_SIGN_UP=false
-      - VERIFY_EMAIL=false
-      - EXPERIMENTAL_FEATURE_ADMIN_PAGE=true
-      - PLUGIN_ADMIN_ENABLED=true # nice for dev mode
-      # Postgres Datasource
-      - PG_DATASOURCE_NAME="My App DB"
-      - PG_DATASOURCE_HOST="xxx"
-      - PG_DATASOURCE_PORT="5432"
-      - PG_DATASOURCE_GRAFANA_USER="grafana"
-      - PG_DATASOURCE_GRAFANA_PASSWORD="xxxx"
-      - PG_DATASOURCE_DATABASE="railway"
-      - PG_DATASOURCE_SSL_MODE="disable"
-      - PG_DATASOURCE_VERSION="1000"
+      # DATABASE
+      - GF_DATABASE_TYPE=postgres
+      - GF_DATABASE_HOST=xxxx:5432
+      - GF_DATABASE_NAME=xxxx
+      - GF_DATABASE_USER=xxxx
+      - GF_DATABASE_PASSWORD=xxxxx
+      - GF_DATABASE_SSL_MODE=disable
+
+      # PLUGINS / FEATURES
+      - GF_FEATURE_MANAGEMENT_ALLOW_EDITING=true
+      - GF_PLUGINS_PLUGIN_ADMIN_ENABLED=true
+      - GF_INSTALL_PLUGINS=grafana-piechart-panel,grafana-worldmap-panel,grafana-clock-panel,grafana-simple-json-datasource,blackcowmoo-googleanalytics-datasource
+
+      # Custom
+      - PG_DATASOURCE_NAME=xxxx
+      - PG_DATASOURCE_HOST=xxxx
+      - PG_DATASOURCE_PORT=5432
+      - PG_DATASOURCE_GRAFANA_USER=xxxx
+      - PG_DATASOURCE_GRAFANA_PASSWORD=xxx
+      - PG_DATASOURCE_DATABASE=xxxx
+      - PG_DATASOURCE_SSL_MODE=disable
+      - PG_DATASOURCE_VERSION=1000
 
     ports:
       - 3000:3000
