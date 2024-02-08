@@ -1,8 +1,9 @@
-
 apiVersion: 1
 
 datasources:
-  - name: $PG_DATASOURCE_NAME
+  - &main_datasource
+    orgId: 1
+    name: $PG_DATASOURCE_NAME
     type: postgres
     url: $PG_DATASOURCE_HOST:$PG_DATASOURCE_PORT
     user: $PG_DATASOURCE_GRAFANA_USER
@@ -17,3 +18,5 @@ datasources:
       connMaxLifetime: 14400 # Grafana v5.4+
       postgresVersion: $PG_DATASOURCE_VERSION # 903=9.3, 904=9.4, 905=9.5, 906=9.6, 1000=10
       timescaledb: true
+  - <<: *main_datasource
+    orgId: 2
