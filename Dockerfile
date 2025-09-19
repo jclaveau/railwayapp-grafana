@@ -1,4 +1,4 @@
-ARG VERSION=latest
+ARG VERSION=10.2.6-ubuntu
 
 FROM grafana/grafana-oss:${VERSION}
 
