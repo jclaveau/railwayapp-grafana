@@ -1,4 +1,4 @@
-ARG VERSION=10.2.6-ubuntu
+ARG VERSION=10.4.19-ubuntu
 
 FROM grafana/grafana-oss:${VERSION}
 
